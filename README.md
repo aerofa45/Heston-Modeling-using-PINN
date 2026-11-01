@@ -47,24 +47,18 @@ Here:
 - $W_t^S, W_t^v$: Brownian motions
 
 
-Under risk-neutral dynamics, the option price $V(S,v,t)$
-satisfies the Heston pricing PDE:
+
+## Heston Pricing PDE
+
+The Heston option-pricing PDE is:
 
 $$
-\begin{aligned}
-0 ={}&
-\frac{\partial V}{\partial t}
-+ \frac{1}{2}vS^2\frac{\partial^2 V}{\partial S^2}\\
-&+ \rho\sigma vS\frac{\partial^2 V}{\partial S\partial v}\\
-&+ \frac{1}{2}\sigma^2v\frac{\partial^2 V}{\partial v^2}\\
-&+ rS\frac{\partial V}{\partial S}
-+ \kappa_Q(\theta_Q-v)\frac{\partial V}{\partial v}
-- rV.
-\end{aligned}
+0 = V_t + \frac{1}{2}vS^2V_{SS} + \rho\sigma vS V_{Sv} + \frac{1}{2}\sigma^2vV_{vv} + rSV_S + \kappa_Q(\theta_Q-v)V_v - rV
 $$
 
-Here, $r$ is the risk-free interest rate, and
-$\kappa_Q,\theta_Q$ are the risk-neutral variance parameters.
+Here, $V_t$, $V_{SS}$, $V_{Sv}$, and $V_{vv}$
+denote the corresponding partial derivatives.
+
 
 
 This provides a mathematical link between stochastic processes, differential equations and numerical learning.
@@ -144,13 +138,7 @@ When $2\kappa\theta \geq \sigma^2$, with suitable positive
 parameters and initial variance, the variance process does
 not reach zero.
 
-An exploratory penalty is:
 
-$$
-\mathcal{L}_{\mathrm{Feller}}
-=
-\max\left(0,\sigma^2-2\kappa\theta\right).
-$$
 
 
 ## 4. Evaluation
