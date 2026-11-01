@@ -12,46 +12,60 @@ This project is an exploratory computational project. There is no new stochastic
 
 ## 1. Background
 
-Unlike constant volatility models the Heston model assumes that the asset price and the instantaneous variance follow stochastic processes.
 
-This model can be defined as follows:
+The Heston model describes an asset price \(S_t\) and a stochastic
+variance process \(v_t\).
+
+The asset-price dynamics are:
 
 $$
+dS_t = \mu S_t\,dt + \sqrt{v_t}\,S_t\,dW_t^S
+$$
 
-dS_t = \mu S_t dt + \sqrt{v_t} S_t dW_t^S
+The stochastic variance dynamics are:
 
-[
-dS_t=\mu S_t,dt+\sqrt{v_t}S_t,dW_t^S
-]
+$$
+dv_t = \kappa(\theta-v_t)\,dt
++ \sigma\sqrt{v_t}\,dW_t^v
+$$
 
-[
-dv_t=\kappa(\theta-v_t),dt+\sigma\sqrt{v_t},dW_t^v
-]
+The two Brownian motions are correlated:
 
-Where:
+$$
+d\langle W^S,W^v\rangle_t = \rho\,dt
+$$
 
-- \(S_t\): Asset Price
+Here:
 
-- \(v_t\): Instantaneous Variance
+- $S_t$: Asset price
+- $v_t$: Instantaneous variance
+- $\mu$: Asset-price drift
+- $\kappa$: Mean-reversion speed
+- $\theta$: Long-run variance
+- $\sigma$: Volatility of variance (volatility of volatility)
+- $\rho$: Correlation between the Brownian motions
+- $W_t^S, W_t^v$: Brownian motions
 
-- \(\kappa\): Rate of mean reversion
 
-- \(\theta\): Long run variance
+Under risk-neutral dynamics, the option price $V(S,v,t)$
+satisfies the Heston pricing PDE:
 
-- \(\sigma\): Variance of variance
-
-- \(\rho\): Correlation between brownian motions
-
-The risk neutral pricing can be defined using a partial differential equation. Using the correct risk neutral parameters the Heston pricing operator can be defined as:
-
-[
+$$
 \begin{aligned}
-0={}&V_t+\frac12vS^2V_{SS}
-+\rho\sigma vS V_{Sv}\
-&+\frac12\sigma^2vV_{vv}
-+rSV_S+\kappa(\theta-v)V_v-rV.
+0 ={}&
+\frac{\partial V}{\partial t}
++ \frac{1}{2}vS^2\frac{\partial^2 V}{\partial S^2}\\
+&+ \rho\sigma vS\frac{\partial^2 V}{\partial S\partial v}\\
+&+ \frac{1}{2}\sigma^2v\frac{\partial^2 V}{\partial v^2}\\
+&+ rS\frac{\partial V}{\partial S}
++ \kappa_Q(\theta_Q-v)\frac{\partial V}{\partial v}
+- rV.
 \end{aligned}
-]
+$$
+
+Here, $r$ is the risk-free interest rate, and
+$\kappa_Q,\theta_Q$ are the risk-neutral variance parameters.
+
 
 This provides a mathematical link between stochastic processes, differential equations and numerical learning.
 
@@ -113,15 +127,31 @@ This experiment includes:
 
 - Stress testing and comparison of loss weights
 
-This experiment also looks at the Feller condition for the Heston model:
+
+The Feller condition for the CIR variance process is:
 
 $$
-
 2\kappa\theta \geq \sigma^2
-
 $$
 
-However the penalty function needs to be corrected to be a valid differentiable constraint.
+where:
+
+- $\kappa$ is the mean-reversion speed.
+- $\theta$ is the long-run variance.
+- $\sigma$ is the volatility-of-variance parameter.
+
+When $2\kappa\theta \geq \sigma^2$, with suitable positive
+parameters and initial variance, the variance process does
+not reach zero.
+
+An exploratory penalty is:
+
+$$
+\mathcal{L}_{\mathrm{Feller}}
+=
+\max\left(0,\sigma^2-2\kappa\theta\right).
+$$
+
 
 ## 4. Evaluation
 
