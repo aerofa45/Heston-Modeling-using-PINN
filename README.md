@@ -20,13 +20,13 @@ $$
 
 dS_t = \mu S_t dt + \sqrt{v_t} S_t dW_t^S
 
-$$
+[
+dS_t=\mu S_t,dt+\sqrt{v_t}S_t,dW_t^S
+]
 
-$$
-
-dv_t = \kappa(\theta - v_t)dt + \sigma \sqrt{v_t} dW_t^v
-
-$$
+[
+dv_t=\kappa(\theta-v_t),dt+\sigma\sqrt{v_t},dW_t^v
+]
 
 Where:
 
@@ -44,17 +44,14 @@ Where:
 
 The risk neutral pricing can be defined using a partial differential equation. Using the correct risk neutral parameters the Heston pricing operator can be defined as:
 
-$$
-
+[
 \begin{aligned}
-
-0 = {}& V_t + \frac{1}{2}vS^2V_{SS} + \rho \sigma v S V_{Sv} + \frac{1}{2} \sigma^2v V_{vv} \\
-
-&+ rSV_S + \kappa(\theta - v)V_v - rV.
-
+0={}&V_t+\frac12vS^2V_{SS}
++\rho\sigma vS V_{Sv}\
+&+\frac12\sigma^2vV_{vv}
++rSV_S+\kappa(\theta-v)V_v-rV.
 \end{aligned}
-
-$$
+]
 
 This provides a mathematical link between stochastic processes, differential equations and numerical learning.
 
